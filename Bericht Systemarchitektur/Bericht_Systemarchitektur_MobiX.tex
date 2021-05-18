@@ -1,0 +1,305 @@
+% ******************************************************************
+% Bachelorarbeit
+% 
+%   - erstellt: 17.05.2021, mb
+% 	- 
+% 
+% 
+% ******************************************************************
+
+
+% --------- Einstellungen für das Dokument -----------------------------------------------------------------------------------------------------------------
+% ----------------------------------------------------------------------------------------------------------------------------------------------------------
+\newcommand{\autor}{Michael Brandmaier}			% erscheint später in Fußzeile
+
+
+% ---------- Seitenlayout festlegen - nichts ändern!
+
+\documentclass[
+    paper=a4,       		% A4-Papier
+    fontsize=12pt,			% Schriftgröße
+    listof=totocnumbered,   % Verzeichnisse im Inhaltsverzeichnis aufführen
+    %twoside,
+%   draft,          		% „draft“ als Definition zur Anzeige von Overfull boxes
+]{scrreprt}		% Bericht als Report anlegen
+
+\usepackage[
+  verbose = true,       % displays the parameter results on the terminal.
+  tmargin=12.7mm,bmargin=12.7mm,lmargin=35mm,rmargin=25mm,
+  includeheadfoot,
+  head=12mm,
+  nomarginpar           % shrinks spaces for marginal notes to 0pt, which is equivalent to \marginparwidth=0pt and \marginparsep=0pt.
+  ]
+{geometry}      % Seite einrichten und alle Einzüge von Hand einstellen
+\usepackage[onehalfspacing]{setspace}
+
+\usepackage[
+    headsepline,    % Linie nach Kopfzeile
+    footsepline     % Linie nach Fußzeile
+]{scrlayer-scrpage}
+
+\setkomafont{sectioning}{\bfseries}     % Schriftart für Überschriften ändern
+\setkomafont{pagehead}{\normalfont}     % Schriftart für Kopfzeile ändern
+\setkomafont{pagefoot}{\normalfont}     % Schriftart für Fußzeile ändern
+
+\pagestyle{scrheadings} 		% erlaubt individuelle Gestaltung von Kopf- und Fußzeile
+\clearscrheadfoot
+\ihead[{\includegraphics[height=1cm]{Bilder/HScoburgLogo}}]{\includegraphics[height=1cm]{Bilder/HScoburgLogo}}	% i=inner: bei einseitigem Dokument links
+\chead[\headmark]{\headmark} 																						% c=center: immer mittig in Kopfzeile
+\ohead[{\includegraphics[height=1cm]{Bilder/MobiX.png}}]{\includegraphics[height=1cm]{Bilder/MobiX.png}}		% o=outer: bei einseitigem Dokument rechts
+\ifoot{\autor}
+\cfoot[]{\pagemark}												% Seitenzahl zentriert im Seitenfuß, bei plain 
+\renewcommand{\chapterpagestyle}{scrheadings}       			% Fuß- und Kopfzeilen auch auf Chapter-Seiten anzeigen
+\automark[chapter]{chapter}										% Kapitelüberschriften in Kopfzeile anzeigen, letztendlich mit \headmark
+\ModifyLayer[addvoffset=-1ex]{scrheadings.foot.above.line}      % Abstand Text in Fußzeile zu Fußzeile 
+\ModifyLayer[addvoffset=-1ex]{plain.scrheadings.foot.above.line}% Abstand Text in Fußzeile zu Fußzeile
+\renewcommand*{\chapterheadstartvskip}{}						% Abstand vor Kapitelüberschriften zu Kopfzeile massiv reduzieren
+\setlength\parindent{0pt}      									% Einrücken von Text nach Absätzen verhindern
+% ----------
+
+
+\usepackage[dvipsnames]{xcolor}		% diverse Farben freischalten und einfach nutzen, zum Beispiel mit fcolorbox{Farbe1}{Farbe2}{Text} für Rahmen um Text
+
+\usepackage{tikz}					% erstellen von Zeichnungen
+\usetikzlibrary{calc,positioning,matrix,angles,quotes,babel,arrows,shapes,decorations.pathmorphing,decorations.pathreplacing,decorations.shapes,decorations.text,patterns,arrows}
+\usetikzlibrary{mindmap,trees}  % Mindmaps mit tikz erstellen
+\usepackage[percent]{overpic}		% In Bild zeichnen
+
+\usepackage{circuitikz}				% erstellen von Schaltplänen
+
+\usepackage[T1]{fontenc}			% Umlaute korrekt darstellen
+\usepackage[utf8]{inputenc} 		% Umlaute korrekt darstellen
+\usepackage[ngerman]{babel}
+
+\usepackage{amsmath}				% Erweiterung für den Mathe-Satz, stellt zusätzliche Mathe-Umgebungen bereit (align, equation, gather, falgin, multline, alignat)
+\usepackage{amssymb}				% lädt zustätzlich „amsfonts“: Fonts msam, msbm und eufm zur Verfügung stellen (zusätzliche mathematische Symbole)
+\usepackage{ulem}           % doppelt Unterstreichen in mathe-Umgebung
+
+\usepackage{listings} 				% Einbinden von Code, hier: Scilab-Code; Einstellungen mit lstset
+
+\usepackage{pgfplots}				% Funktionen linear oder logarithmisch sehr einfach erstellen und plotten
+\usepgfplotslibrary{fillbetween} 	% Fläche zwischen Graphen füllen
+\pgfplotsset{compat=1.12}			% Build-System für pgfplots; default: „compat=newest“, funktioniert aber nicht für alles...
+
+\usepackage{url}            % Zeilenumbnruch einer URL an jedem beliebigen Zeichen
+\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks%  save the current one
+      \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j%
+      \do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t%
+      \do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D%
+      \do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N%
+      \do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X%
+      \do\Y\do\Z}
+
+\usepackage{graphicx,svg}			% einfügen und bearbeiten von Bildern
+\usepackage[e]{esvect}				% Vektorpfeile über Zeichen schöner darstellen, Aufruf z.B. mit \vv, a-h: Aussehen der Pfeilspitze
+\usepackage[german]{varioref}		% Labels besser referenzieren (Seitenbezug wird mit angezeigt)
+\usepackage[pdfborder={0 0 0}, breaklinks]{hyperref}		% automatische und manuelle Erstellung von dynamischen Querverweisen, pdfborder: rote Kästen im Viewer abschalten
+\usepackage{fancybox}				% fügt verschiedene Boxen als Vorlage ein, Schatten, oval, gerundete Ecken,...
+\usepackage{enumitem}				% Bearbeiten von verschiedenen Parametern die drei grundlegenden Listen in LaTeX (enumerate, itemize and description) 
+\usepackage{float}					% figure erzwingt positionieren mit {figure}[H]
+\usepackage{scrhack}       % redefines macros of packages from other authors to prevent warnings
+
+\usepackage[printonlyused]{acronym}				% Abkürzungsverzeichnis, nur die verwendeten in der pdf Anzeigen
+
+\usepackage{underscore}     % Unterstrich in normalen Text möglich
+
+%\usepackage{url}
+% \makeatletter \g@addto@macro\UrlSpecials{\do\={\newline}}
+
+\usepackage{array}					% Tabellenstil
+\usepackage{colortbl}     			% Tabellenkopf farbig hinterlegen
+\usepackage{hhline}					% Tabellenlinien konfigurieren
+
+\usepackage[official]{eurosym}		% Euro-Zeichen
+\usepackage{rotating} 				% drehen von Tabellen, „\begin{sidewaystable}“
+\usepackage{here}           % Bild mit H zwingend an dieser Stelle einfügen
+\usepackage{makecell}            % Zeilenumbrüche in Tabelle hinzufügen
+
+\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}	% neuer Befehl zum mittig schreiben in Tabellen bei bestimmter Spaltenbreite
+
+\setcounter{tocdepth}{3}			% Tiefe des Inhaltsverzeichnisses
+\setcounter{secnumdepth}{3}			% Tiefe der Nummerierung
+
+\newcommand{\mymeter}[2] 
+{  % #1 = name , #2 = rotation angle
+	\begin{scope}[transform shape,rotate=#2]
+		\draw[thick] (#1)node(){$\mathbf A$} circle (11pt);
+		\draw[rotate=45,-latex] (#1)  +(-17pt,0) --+(17pt,0);
+	\end{scope}
+}
+
+
+% Einstellung für die Einbindung von Code - hier: C-Code - nicht ändern!
+\lstset{
+  language=vhdl,	% Programmiersorache einstellen, Latex erkennt dann automatisch code, kommentare, funktionen,...
+  basicstyle=\scriptsize\ttfamily,	% Schriftformatierung, ttfamily: text im Schreibmaschinen-Style
+  backgroundcolor=\color{white},		% Hintergrundfarbe
+  breaklines=true,	% automatischer Zeilenumbruch bei langen Zeilen, funktioniert nur bei bestimmen Zeichen, z.B. Umbruch nach Leerzeichen
+  keywordstyle=\bfseries\ttfamily\color{blue},	% Schlüsselwörter einstellen
+  stringstyle=\ttfamily\color{Peach},			% Textsrtrings
+  showstringspaces=false,	% Leerzeichen in Strings richtig darstellen
+  commentstyle=\color{ForestGreen}\ttfamily,	% Kommentare
+  flexiblecolumns=false,	% Spaltenbreite dynamisch/fest
+  numbers=left,		% Position der Zeilennummern
+  numberstyle=\tiny,	% Größe der Zeilennummern
+  numberblanklines=false,		% leere Zeilen werde mit ‚false‘ nicht durchnummeriert
+  stepnumber=1,		% Beginn der Nummerierung
+  numbersep=10pt,		% Abstand zwischen Zeilennummern und Quellcode
+  xleftmargin=20pt,	% Abstand zum linken Rand
+  xrightmargin=10pt,	% Abstand zum rechten Rand
+  extendedchars=true,	% Sonderzeichen korrekt darstellen
+  frame=trbl,			% Rahmen um gesamten Code: Top, right, bottom, left (Großbuchstaben ergeben Doppellinien)
+  frameround=ffff,	% Ecken des Rahmens anpassen, t: runde Ecken, f: default (eckig), es müssen 4 Buchstaben da stehen!
+  literate=		% ersetzen von Zeichen 1 durch Zeichen 2, hier: korrekte Einbindung der Sonderzeichen
+   {Ö}{{\"O}}1 
+   {Ä}{{\"A}}1 
+   {Ü}{{\"U}}1 
+   {ß}{{\ss}}1 
+   {ü}{{\"u}}1 
+   {ä}{{\"a}}1 
+   {ö}{{\"o}}1,
+  % mit ‚emph‘ und ‚emphstyle‘ können eigene Styles für Wörter angelegt werden
+  emph = [1]{clc, color},
+  emphstyle = [1]{\color{blue}},
+  emph = [2]{function, endfunction},
+  emphstyle = [2]{\color{BrickRed}},
+  emph = [3]{gcf},
+  emphstyle = [3]{\color{black}},
+}  
+
+
+% Abbildungsverzeichnis, Tabellenverzeichnis, Literaturverzeichnis als nummerierte section darstellen
+\makeatletter
+\renewcommand\listoftables{%
+    \section{\listtablename}%
+    \@mkboth{\MakeUppercase\listtablename}%
+        {\MakeUppercase\listtablename}%
+    \@starttoc{lot}%
+}
+\renewcommand\listoffigures{%
+    \section{\listfigurename}%
+    \@mkboth{\MakeUppercase\listfigurename}%
+        {\MakeUppercase\listfigurename}%
+    \@starttoc{lof}%
+}
+\renewcommand\lstlistoflistings{%
+    \section{\lstlistlistingname}%
+    \@mkboth{\MakeUppercase\lstlistlistingname}%
+        {\MakeUppercase\lstlistlistingname}%
+    \@starttoc{lol}%
+}
+
+\renewenvironment{thebibliography}[1]
+     {\section{Quellenverzeichnis}		% this line was changed from \chapter* to \section*
+      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\makeatother
+
+
+% Eigener Befehl um Zitate einzufügen
+\newcommand*{\zitat}[3]{% 
+	{
+		\par\smallskip
+		\centerline{
+		\begin{minipage}[t]{135mm}
+			\textit{\glqq#1\grqq} \footnotemark
+		\end{minipage}
+		}
+		\par\medskip
+		\footnotetext{#2, siehe \cite{#3}}
+	}
+} 
+
+% Eigener Befehl um Bilder einzufügen
+\newcommand*{\bild}[4]{%
+	\par
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[height=70mm, width=80mm,keepaspectratio]{#1}  % maximale Höhe, maximale Breite, keine Verzerrung des Bildes (Höhe, Breite nicht als Fixwert ansehen)
+		\caption[#2]{#3}
+		\label{fig:#4}
+	\end{figure}
+}
+
+% Eigener Befehl um Bilder in groß einzufügen
+\newcommand*{\bildG}[4]{%
+  \par
+  \begin{figure}[H]
+    \centering
+    \includegraphics[height=210mm, width=150mm,keepaspectratio]{#1}  % maximale Höhe, maximale Breite, keine Verzerrung des Bildes (Höhe, Breite nicht als Fixwert ansehen)
+    \caption[#2]{#3}
+    \label{fig:#4}
+  \end{figure}
+}
+
+% Eigener Befehl um Verweise einzufügen
+\newcommand{\fref}[1]{\autoref{#1} auf \autopageref{#1}}	% Referenz auf Abbilungen mit dem Wort „Abbildung“  und „Seite“ darstellen
+
+% Eigener Befehl für fancy-Boxen mit fester Breite
+\newcommand{\deluxeBox}[1]{\cornersize{.2}\ovalbox{\cornersize{1}\parbox{130mm}{#1}}\\}
+
+% Eigener Befehl für Aufzählungs-Items in einer Tabelle
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+
+% Referenzierung des Quellcodes in der Caption und der Referenz abändern
+\renewcommand{\lstlistingname}{Quellcode}% Listing -> Quellcode
+\renewcommand{\lstlistlistingname}{\lstlistingname -Verzeichnis}% List of Listings -> Quellcode-Verzeichnis
+
+% Wörter selber trennen
+\hyphenation{Re-form-pä-da-go-gen}
+
+
+
+% --------- Beginn Dokument --------------------------------------------------------------------------------------------------------------------------------
+% ----------------------------------------------------------------------------------------------------------------------------------------------------------
+\begin{document}
+\tikzset{integ/.pic={
+\draw [blue,fill=green!30](0,2.5)rectangle(1,-2.5) (1,2.5)--(6,0)--(1,-2.5)--cycle node at (1.5,0) {$\displaystyle \int$};
+}}
+
+\onehalfspacing                  % 1.5-fachen Zeilenabstand einstellen
+
+\input{Kapitel/Titelseite}
+
+\pagebreak
+\tableofcontents
+\pagebreak
+
+\input{Kapitel/Inhalt}
+
+%***** new chapter *********************************************************************
+%***************************************************************************************
+\chapter{Anhang}
+%***** new section *********************************************************************
+\section{Abkürzungsverzeichnis}
+\begin{acronym}[LFSR]   % längste Abkürzung angeben, um schöne Anordnung zu erhalten
+  \acro{bzw}[bzw.]{beziehungsweise}
+  \acro{fpga}[FPGA]{Field Programmable Gate Array}
+  \acro{dh}[d. h.]{das heißt}
+  \acro{ad}[AD] {Analog-Digital}
+  \acro{dac}[DAC]{Digital Analog Converter}
+  \acro{r}[R]{resistor}
+  \acro{pll}[PLL]{Phase Locked Loop}
+  \acro{lfsr}[LFSR]{linear feedback shift register}
+\end{acronym}
+
+\chead[2 Anhang]{2 Anhang}    % Inhalt der Kopfzeile erzwingen
+\listoffigures      % Abbildungsverzeichnis anzeigen
+
+
+\end{document}
